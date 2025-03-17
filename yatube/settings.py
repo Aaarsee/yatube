@@ -126,4 +126,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 LOGIN_URL = 'user:login'
 LOGIN_REDIRECT_URL = 'signup'
-#LOGOUT_REDIRECT_URL = 'index'
+CHANGE_PASSWORD_DONE_REDIRECT_URL = 'change_password_done'
+LOGOUT_REDIRECT_URL = 'logout'
