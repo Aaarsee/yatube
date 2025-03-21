@@ -64,6 +64,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'core.contex_processors.year.year'
             ],
         },
     },
@@ -125,6 +126,15 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 LOGIN_URL = 'user:login'
-LOGIN_REDIRECT_URL = 'signup'
-CHANGE_PASSWORD_DONE_REDIRECT_URL = 'change_password_done'
-LOGOUT_REDIRECT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'posts:main'
+#CHANGE_PASSWORD_DONE_REDIRECT_URL = 'change_password_done'
+#LOGOUT_REDIRECT_URL = 'logout'
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+    }
+}
