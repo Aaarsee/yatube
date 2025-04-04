@@ -14,6 +14,8 @@
                               <a href='#'> Запись не найдены </a> 
                     {% endif %}
                     {% if not forloop.last %}<hr>{% endif %}
-                    {% endfor %}
-
+          {% endfor %}
+          {% if page_obj.has_other_pages %}
+              {% include "includes/paginator.html" with items=page_obj paginator=paginator %}
+          {% endif %}
 {% endblock %}

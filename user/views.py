@@ -6,4 +6,3 @@ class SignUp(CreateView):
           form_class = CreationForm
           success_url = reverse_lazy('user:signup')
           template_name = 'signup.html'
-          
