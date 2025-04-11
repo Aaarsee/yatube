@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post, Group, User
+from .forms import PostForm
 
 def authirized(func):
           def check_user(request,*args, **kwargs):
@@ -33,7 +34,7 @@ def group_posts(request, slug):
 
 def profile(request, username):
           author = get_object_or_404(User, username=username)
-          posts = Post.objects.all().filter(author=username).order_by('-pub_date')
+          posts = author.posts.all()
           paginator = Paginator(posts, 5)
           page_number = request.GET.get('page')
           page_obj  = paginator.get_page(page_number)
@@ -42,7 +43,18 @@ def profile(request, username):
                      'page_obj': page_obj,
                      'paginator': paginator}
           return render(request, 'profile.html', context)
-def post_detail():
-          context={}
+def post_detail(request, post_id):
+          post = get_object_or_404(Post, id=post_id)
+          author = post.author
+          context={'author': author,
+          'post': post}
           return render(request, 'post_detail.html', context)
-
+@authirized
+def new_post(request):
+          form = PostForm(request.POST or None, files=request.FILES or None)
+          if not form.is_valid():
+                    return render(request, 'new_post.html',{'form': form})
+          post_new = form.save(commit=False)
+          post_new.author = request.user
+          post_new.save()
+          return redirect('posts:main')

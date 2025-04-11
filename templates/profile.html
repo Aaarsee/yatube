@@ -2,7 +2,10 @@
 {% block title%}Профиль {{ author.username }}{% endblock %}
 {% block header %}Cтраница пользователя{{ author.username }}{% endblock %}
 {% block content %}
+<h1>Страница пользователя {{ author.username }}</h1>
+<h3>Всего постов {{ author.posts.count}} </h3>
 <main class="container"> 
+
           <p>{{ group.description|linebreaks }}</p>
           {% for post in page_obj %}
           <h3> 
